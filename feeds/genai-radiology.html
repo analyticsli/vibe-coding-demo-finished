@@ -1,0 +1,279 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Generative AI in Radiology — Literature Dashboard</title>
+<style>
+  :root{
+    --navy:#0C255B;
+    --teal:#007681;
+    --navy-soft:#3a4f82;
+    --ink:#1c2333;
+    --muted:#5b6472;
+    --line:#e4e7ee;
+    --bg:#f7f8fb;
+    --card:#ffffff;
+  }
+  *{box-sizing:border-box}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--ink);
+    font:16px/1.55 -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Helvetica,Arial,sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .wrap{max-width:1040px;margin:0 auto;padding:40px 24px 72px}
+  h1,h2,h3{font-family:Georgia,"Times New Roman",serif;color:var(--navy);font-weight:700;line-height:1.2}
+  h1{font-size:34px;margin:0 0 6px}
+  h2{font-size:22px;margin:0 0 4px}
+  .lede{color:var(--muted);margin:0 0 4px;font-size:15px}
+
+  /* Header hero */
+  header{
+    background:linear-gradient(135deg,var(--navy) 0%,#123a6b 100%);
+    color:#fff;border-radius:16px;padding:32px 34px;margin-bottom:34px;
+  }
+  header h1{color:#fff;margin-bottom:10px}
+  header .sub{color:#c9d4ea;font-size:15px;max-width:70ch;margin:0}
+  .bignum{display:flex;align-items:baseline;gap:16px;margin:22px 0 4px;flex-wrap:wrap}
+  .bignum .n{font-family:Georgia,serif;font-size:58px;font-weight:700;color:#fff;line-height:1}
+  .bignum .lbl{color:#a9d6dc;font-size:14px;letter-spacing:.04em;text-transform:uppercase}
+  .bignum .n .teal{color:#5fd0d9}
+  .note{font-size:12.5px;color:#9fb0cd;margin-top:8px}
+
+  section{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:26px 28px;margin-bottom:26px}
+  .sec-head{margin-bottom:18px}
+
+  /* Growth chart */
+  .chart-grid{display:grid;grid-template-columns:1fr;gap:34px}
+  @media(min-width:820px){.chart-grid{grid-template-columns:1.15fr .85fr}}
+  .bars{display:flex;align-items:flex-end;gap:10px;height:260px;padding-top:10px;border-bottom:2px solid var(--line)}
+  .bar{flex:1;display:flex;flex-direction:column;justify-content:flex-end;align-items:center;height:100%;position:relative}
+  .bar .col{width:70%;max-width:42px;background:var(--navy);border-radius:5px 5px 0 0;transition:none;min-height:2px}
+  .bar.partial .col{background:repeating-linear-gradient(135deg,var(--teal),var(--teal) 5px,#4ba7ad 5px,#4ba7ad 10px)}
+  .bar .v{font-size:10.5px;color:var(--muted);margin-bottom:5px;white-space:nowrap}
+  .bar .yr{font-size:11px;color:var(--muted);margin-top:7px}
+  .legend{display:flex;gap:18px;margin-top:14px;font-size:12.5px;color:var(--muted);flex-wrap:wrap}
+  .swatch{display:inline-block;width:11px;height:11px;border-radius:3px;vertical-align:middle;margin-right:6px}
+  .swatch.navy{background:var(--navy)}
+  .swatch.teal{background:repeating-linear-gradient(135deg,var(--teal),var(--teal) 4px,#4ba7ad 4px,#4ba7ad 8px)}
+
+  /* Venue bars */
+  .venue{margin-bottom:11px}
+  .venue .row{display:flex;justify-content:space-between;font-size:13px;margin-bottom:4px;gap:10px}
+  .venue .row .name{color:var(--ink);font-weight:500}
+  .venue .row .cnt{color:var(--teal);font-weight:600;font-variant-numeric:tabular-nums;white-space:nowrap}
+  .track{background:#eef1f6;border-radius:6px;height:9px;overflow:hidden}
+  .track > i{display:block;height:100%;background:var(--teal);border-radius:6px}
+
+  /* Paper lists */
+  ol.papers{list-style:none;counter-reset:p;margin:0;padding:0}
+  ol.papers li{counter-increment:p;display:grid;grid-template-columns:44px 1fr auto;gap:14px;align-items:start;
+    padding:15px 0;border-top:1px solid var(--line)}
+  ol.papers li:first-child{border-top:none}
+  ol.papers li::before{content:counter(p);grid-row:1/3;font-family:Georgia,serif;font-size:20px;font-weight:700;
+    color:#fff;background:var(--navy);width:36px;height:36px;border-radius:9px;display:flex;align-items:center;justify-content:center}
+  .pt{font-weight:600;color:var(--navy);text-decoration:none;line-height:1.35}
+  .pt:hover{text-decoration:underline;color:var(--teal)}
+  .meta{font-size:12.5px;color:var(--muted);margin-top:3px}
+  .cites{text-align:right;white-space:nowrap;font-variant-numeric:tabular-nums}
+  .cites b{font-family:Georgia,serif;color:var(--teal);font-size:19px;display:block;line-height:1}
+  .cites span{font-size:10.5px;color:var(--muted);text-transform:uppercase;letter-spacing:.04em}
+
+  ul.recent{list-style:none;margin:0;padding:0}
+  ul.recent li{padding:13px 0;border-top:1px solid var(--line)}
+  ul.recent li:first-child{border-top:none}
+  ul.recent .rt{font-weight:600;color:var(--navy);text-decoration:none}
+  ul.recent .rt:hover{color:var(--teal);text-decoration:underline}
+  .pill{display:inline-block;font-size:11px;color:var(--teal);border:1px solid var(--teal);
+    border-radius:999px;padding:1px 9px;margin-right:8px;vertical-align:middle}
+
+  footer{color:var(--muted);font-size:12.5px;text-align:center;margin-top:12px;line-height:1.7}
+  footer a{color:var(--teal)}
+  a{color:var(--teal)}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1>Generative AI in Radiology</h1>
+    <p class="sub">A snapshot of a field that barely existed a decade ago and now publishes at industrial scale — where the work appears, what to read first, and what has landed most recently. Built live from the OpenAlex scholarly database.</p>
+    <div class="bignum">
+      <span class="n">33,251</span>
+      <span class="lbl">matching works,<br>2016 – 2026</span>
+    </div>
+    <p class="note">Query: “generative AI radiology.” 2026 is year-to-date (as of Jul 2026). OpenAlex keyword search is broad; the reading lists below are curated for radiology/imaging relevance.</p>
+  </header>
+
+  <!-- GROWTH + VENUES -->
+  <section>
+    <div class="sec-head">
+      <h2>1 · The growth curve, and where it lands</h2>
+      <p class="lede">Papers per year over the last decade — and the venues carrying the most of this work.</p>
+    </div>
+    <div class="chart-grid">
+      <div>
+        <div class="bars" role="img" aria-label="Bar chart of generative-AI-in-radiology publications per year, 2016 to 2026">
+          <div class="bar"><span class="v">26</span><span class="col" style="height:1%"></span><span class="yr">’16</span></div>
+          <div class="bar"><span class="v">36</span><span class="col" style="height:1%"></span><span class="yr">’17</span></div>
+          <div class="bar"><span class="v">60</span><span class="col" style="height:1%"></span><span class="yr">’18</span></div>
+          <div class="bar"><span class="v">165</span><span class="col" style="height:2%"></span><span class="yr">’19</span></div>
+          <div class="bar"><span class="v">440</span><span class="col" style="height:4%"></span><span class="yr">’20</span></div>
+          <div class="bar"><span class="v">774</span><span class="col" style="height:6%"></span><span class="yr">’21</span></div>
+          <div class="bar"><span class="v">1,079</span><span class="col" style="height:9%"></span><span class="yr">’22</span></div>
+          <div class="bar"><span class="v">3,325</span><span class="col" style="height:28%"></span><span class="yr">’23</span></div>
+          <div class="bar"><span class="v">5,910</span><span class="col" style="height:49%"></span><span class="yr">’24</span></div>
+          <div class="bar"><span class="v">12,011</span><span class="col" style="height:100%"></span><span class="yr">’25</span></div>
+          <div class="bar partial"><span class="v">9,425</span><span class="col" style="height:78%"></span><span class="yr">’26</span></div>
+        </div>
+        <div class="legend">
+          <span><span class="swatch navy"></span>Published works</span>
+          <span><span class="swatch teal"></span>2026 — year-to-date (partial)</span>
+        </div>
+      </div>
+      <div>
+        <h3 style="font-size:15px;margin:0 0 14px;color:var(--navy)">Top venues</h3>
+        <div class="venue"><div class="row"><span class="name">arXiv</span><span class="cnt">2,916</span></div><div class="track"><i style="width:100%"></i></div></div>
+        <div class="venue"><div class="row"><span class="name">Frontiers in Oncology</span><span class="cnt">1,687</span></div><div class="track"><i style="width:58%"></i></div></div>
+        <div class="venue"><div class="row"><span class="name">Frontiers in Medicine</span><span class="cnt">1,289</span></div><div class="track"><i style="width:44%"></i></div></div>
+        <div class="venue"><div class="row"><span class="name">Frontiers in Immunology</span><span class="cnt">753</span></div><div class="track"><i style="width:26%"></i></div></div>
+        <div class="venue"><div class="row"><span class="name">Research Square (preprint)</span><span class="cnt">645</span></div><div class="track"><i style="width:22%"></i></div></div>
+        <div class="venue"><div class="row"><span class="name">Frontiers in Neurology</span><span class="cnt">615</span></div><div class="track"><i style="width:21%"></i></div></div>
+        <div class="venue"><div class="row"><span class="name">medRxiv (preprint)</span><span class="cnt">474</span></div><div class="track"><i style="width:16%"></i></div></div>
+        <div class="venue"><div class="row"><span class="name">Scientific Reports</span><span class="cnt">449</span></div><div class="track"><i style="width:15%"></i></div></div>
+        <p class="note" style="color:var(--muted);margin-top:14px">Preprint servers (arXiv, Research Square, medRxiv) lead — a signature of a fast-moving field publishing ahead of peer review.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- TOP CITED -->
+  <section>
+    <div class="sec-head">
+      <h2>2 · The ten to read first</h2>
+      <p class="lede">Highest-cited works, curated for radiology &amp; medical-imaging relevance — the foundations plus the generative-AI landmarks. Titles link to the paper.</p>
+    </div>
+    <ol class="papers">
+      <li>
+        <div>
+          <a class="pt" href="https://doi.org/10.1016/j.media.2017.07.005">A survey on deep learning in medical image analysis</a>
+          <div class="meta">Litjens et al. · Medical Image Analysis · 2017</div>
+        </div>
+        <div class="cites"><b>14,465</b><span>citations</span></div>
+      </li>
+      <li>
+        <div>
+          <a class="pt" href="https://doi.org/10.1371/journal.pdig.0000198">Performance of ChatGPT on USMLE: potential for AI-assisted medical education using large language models</a>
+          <div class="meta">Kung et al. · PLOS Digital Health · 2023</div>
+        </div>
+        <div class="cites"><b>3,620</b><span>citations</span></div>
+      </li>
+      <li>
+        <div>
+          <a class="pt" href="https://doi.org/10.1038/s41598-020-76550-z">COVID-Net: a tailored deep CNN for detecting COVID-19 from chest X-ray images</a>
+          <div class="meta">Wang, Lin &amp; Wong · Scientific Reports · 2020</div>
+        </div>
+        <div class="cites"><b>3,160</b><span>citations</span></div>
+      </li>
+      <li>
+        <div>
+          <a class="pt" href="https://doi.org/10.48550/arxiv.2303.08774">GPT-4 Technical Report</a>
+          <div class="meta">OpenAI · arXiv · 2023</div>
+        </div>
+        <div class="cites"><b>2,404</b><span>citations</span></div>
+      </li>
+      <li>
+        <div>
+          <a class="pt" href="https://doi.org/10.1109/tnnls.2020.3027314">A survey on explainable artificial intelligence (XAI): toward medical XAI</a>
+          <div class="meta">Tjoa &amp; Guan · IEEE Trans. Neural Networks &amp; Learning Systems · 2020</div>
+        </div>
+        <div class="cites"><b>2,218</b><span>citations</span></div>
+      </li>
+      <li>
+        <div>
+          <a class="pt" href="https://doi.org/10.1038/s41586-023-05881-4">Foundation models for generalist medical artificial intelligence</a>
+          <div class="meta">Moor et al. · Nature · 2023</div>
+        </div>
+        <div class="cites"><b>1,621</b><span>citations</span></div>
+      </li>
+      <li>
+        <div>
+          <a class="pt" href="https://doi.org/10.1038/s41746-020-00376-2">Deep learning-enabled medical computer vision</a>
+          <div class="meta">Esteva et al. · npj Digital Medicine · 2021</div>
+        </div>
+        <div class="cites"><b>1,295</b><span>citations</span></div>
+      </li>
+      <li>
+        <div>
+          <a class="pt" href="https://doi.org/10.48550/arxiv.2204.14198">Flamingo: a visual language model for few-shot learning</a>
+          <div class="meta">Alayrac et al. · arXiv · 2022</div>
+        </div>
+        <div class="cites"><b>1,244</b><span>citations</span></div>
+      </li>
+      <li>
+        <div>
+          <a class="pt" href="https://doi.org/10.1038/s41591-022-01981-2">Multimodal biomedical AI</a>
+          <div class="meta">Acosta, Falcone, Rajpurkar &amp; Topol · Nature Medicine · 2022</div>
+        </div>
+        <div class="cites"><b>1,158</b><span>citations</span></div>
+      </li>
+      <li>
+        <div>
+          <a class="pt" href="https://doi.org/10.1109/jproc.2021.3054390">A review of deep learning in medical imaging: traits, trends, case studies &amp; future promises</a>
+          <div class="meta">Zhou, Greenspan, Davatzikos et al. · Proceedings of the IEEE · 2021</div>
+        </div>
+        <div class="cites"><b>1,011</b><span>citations</span></div>
+      </li>
+    </ol>
+  </section>
+
+  <!-- RECENT -->
+  <section>
+    <div class="sec-head">
+      <h2>3 · Freshest off the press</h2>
+      <p class="lede">Radiology &amp; imaging work from the most recent cohort (2026) — where the frontier is moving right now.</p>
+    </div>
+    <ul class="recent">
+      <li>
+        <span class="pill">Chest X-ray</span>
+        <a class="rt" href="https://doi.org/10.1186/s12880-026-02557-z">Performance evaluation of domain-specific and general-purpose AI models for chest radiograph interpretation: a comparative study</a>
+        <div class="meta">Kim et al. · BMC Medical Imaging · 2026</div>
+      </li>
+      <li>
+        <span class="pill">MRI</span>
+        <a class="rt" href="https://doi.org/10.59345/sjrir.v3i2.290">Deep-learning pharmacokinetic modelling for personalised low-dose gadolinium in oncological 3-Tesla MRI: a diagnostic-accuracy study</a>
+        <div class="meta">Putri &amp; Sanjaya · Sriwijaya J. of Radiology and Imaging Research · 2026</div>
+      </li>
+      <li>
+        <span class="pill">CT · Oncology</span>
+        <a class="rt" href="https://doi.org/10.1016/j.ejrad.2026.112997">CT-based AI multidimensional volumetric parameters for predicting surgical complexity and T stage in renal cell carcinoma</a>
+        <div class="meta">Lin et al. · European Journal of Radiology · 2026</div>
+      </li>
+      <li>
+        <span class="pill">Vision-language</span>
+        <a class="rt" href="https://openalex.org/W7167747437">Evaluating and understanding model editing for medical vision-language models</a>
+        <div class="meta">Zhu, Wu &amp; Shen · arXiv · 2026</div>
+      </li>
+      <li>
+        <span class="pill">Reporting</span>
+        <a class="rt" href="https://doi.org/10.1007/s11547-026-02255-4">Request and reporting models for CT in cancer care: SIRM–AIOM consensus</a>
+        <div class="meta">Granata et al. · La radiologia medica · 2026</div>
+      </li>
+      <li>
+        <span class="pill">Vision-language</span>
+        <a class="rt" href="https://doi.org/10.1038/s41746-026-02932-8">A clinician-aligned vision-language framework for stepwise interpretation in fundus fluorescein angiography</a>
+        <div class="meta">Su et al. · npj Digital Medicine · 2026</div>
+      </li>
+    </ul>
+  </section>
+
+  <footer>
+    Source: <a href="https://openalex.org">OpenAlex</a> · generated 15 Jul 2026 for the Vibe Coding demo ·
+    citation counts and venue totals as returned by OpenAlex at build time.<br>
+    Reading lists are curated from a broad keyword search for radiology/imaging relevance; counts reflect the literal “generative AI radiology” corpus.
+  </footer>
+
+</div>
+</body>
+</html>

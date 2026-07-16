@@ -1,0 +1,22 @@
+# --- scratch work: experiments and one-off scripts stay out of the shared repo
+scratch/
+*.tmp
+*~
+
+# --- imperfect / in-progress outputs: share the good version, not every draft
+drafts/
+*.draft.html
+
+# --- secrets NEVER belong in a repo (habit #2: never put a key on screen,
+# --- in a chat, or in a repo). If a tool needs one, it goes in .env — ignored.
+.env
+*.key
+*_token*
+
+# --- machine noise
+.DS_Store
+__pycache__/
+*.pyc
+.claude/settings.local.json
+.claude/logs/
+.playwright-mcp/

@@ -1,0 +1,689 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Jingjing Li — Associate Professor of IT and Innovation, UVA McIntire</title>
+<style>
+  :root {
+    --navy: #232D4B;        /* UVA Navy */
+    --orange: #E57200;      /* UVA Orange */
+    --navy-soft: #3d4a73;
+    --ink: #1f2430;
+    --muted: #5a6272;
+    --paper: #ffffff;
+    --bg: #f6f7fa;
+    --line: #e3e6ee;
+    --highlight-bg: #fff8f0;
+    --serif: Georgia, "Times New Roman", serif;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    margin: 0;
+    font-family: var(--sans);
+    font-size: 16.5px;
+    line-height: 1.65;
+    color: var(--ink);
+    background: var(--bg);
+  }
+  a { color: var(--navy); text-decoration: none; border-bottom: 1px solid rgba(35,45,75,.3); }
+  a:hover { color: var(--orange); border-bottom-color: var(--orange); }
+
+  /* ---------- Header ---------- */
+  .hero {
+    background: linear-gradient(135deg, var(--navy) 0%, #2e3b63 100%);
+    color: #fff;
+    padding: 3.2rem 1.5rem 2.4rem;
+  }
+  .hero .hero-inner {
+    max-width: 52rem;
+    margin: 0 auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 2.2rem;
+  }
+  .hero .portrait {
+    width: 172px;
+    height: 172px;
+    border-radius: 50%;
+    object-fit: cover;
+    object-position: 50% 20%;
+    border: 4px solid var(--orange);
+    box-shadow: 0 4px 18px rgba(0,0,0,.35);
+    flex-shrink: 0;
+  }
+  .hero .hero-text { text-align: left; }
+  @media (max-width: 640px) {
+    .hero .hero-inner { flex-direction: column; gap: 1.3rem; }
+    .hero .hero-text { text-align: center; }
+  }
+  .hero h1 {
+    font-family: var(--serif);
+    font-size: clamp(2rem, 5vw, 2.9rem);
+    margin: 0 0 .35rem;
+    letter-spacing: .01em;
+  }
+  .hero .tagline {
+    font-family: var(--serif);
+    font-style: italic;
+    font-size: 1.15rem;
+    color: var(--orange);
+    margin: 0 0 1.2rem;
+  }
+  .hero .titles {
+    font-size: 1rem;
+    color: #d8dcea;
+    margin: 0 auto;
+    max-width: 40rem;
+  }
+  .hero .titles strong { color: #fff; font-weight: 600; }
+  .accent-bar { height: 5px; background: var(--orange); }
+
+  /* ---------- Tabs ---------- */
+  nav.tabs {
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background: var(--paper);
+    border-bottom: 1px solid var(--line);
+    box-shadow: 0 1px 6px rgba(35,45,75,.08);
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    gap: .25rem;
+    padding: 0 .5rem;
+  }
+  nav.tabs button {
+    appearance: none;
+    background: none;
+    border: none;
+    border-bottom: 3px solid transparent;
+    font: 600 .95rem var(--sans);
+    letter-spacing: .03em;
+    color: var(--muted);
+    padding: .9rem 1.1rem .75rem;
+    cursor: pointer;
+    transition: color .15s;
+  }
+  nav.tabs button:hover { color: var(--navy); }
+  nav.tabs button.active {
+    color: var(--navy);
+    border-bottom-color: var(--orange);
+  }
+
+  /* ---------- Panels ---------- */
+  main { max-width: 62rem; margin: 0 auto; padding: 2.2rem 1.4rem 3rem; }
+  section.panel { display: none; }
+  section.panel.active { display: block; animation: fadein .25s ease; }
+  @keyframes fadein { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
+
+  h2 {
+    font-family: var(--serif);
+    color: var(--navy);
+    font-size: 1.7rem;
+    margin: 0 0 1.1rem;
+    padding-bottom: .4rem;
+    border-bottom: 3px solid var(--orange);
+    display: inline-block;
+  }
+  h3 {
+    font-family: var(--serif);
+    color: var(--navy);
+    font-size: 1.2rem;
+    margin: 1.8rem 0 .6rem;
+  }
+  h4 {
+    font-size: .85rem;
+    text-transform: uppercase;
+    letter-spacing: .08em;
+    color: var(--orange);
+    margin: 1.6rem 0 .5rem;
+  }
+
+  .card {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    padding: 1.5rem 1.7rem;
+    margin-bottom: 1.4rem;
+    box-shadow: 0 1px 3px rgba(35,45,75,.05);
+  }
+  ul { padding-left: 1.25rem; margin: .4rem 0 1rem; }
+  li { margin-bottom: .45rem; }
+
+  /* ---------- Publications ---------- */
+  ul.pubs { list-style: none; padding: 0; margin: 0; }
+  ul.pubs li {
+    background: var(--paper);
+    border: 1px solid var(--line);
+    border-left: 4px solid var(--navy-soft);
+    border-radius: 8px;
+    padding: .95rem 1.2rem;
+    margin-bottom: .8rem;
+  }
+  ul.pubs li.awarded {
+    border-left: 4px solid var(--orange);
+    background: var(--highlight-bg);
+  }
+  ul.pubs .pub-title { font-weight: 650; color: var(--navy); }
+  ul.pubs .venue { font-style: italic; }
+  .award-note {
+    display: block;
+    margin-top: .4rem;
+    font-size: .9rem;
+    font-weight: 600;
+    color: var(--orange);
+  }
+  .award-note::before { content: "🏆 "; }
+
+  /* ---------- Footer (copyright only) ---------- */
+  footer.site-footer {
+    background: var(--navy);
+    color: #dfe3ef;
+    text-align: center;
+    padding: 1.4rem 1.5rem 1.5rem;
+    font-size: .9rem;
+  }
+  footer.site-footer p { margin: .2rem 0; }
+  footer.site-footer .colophon {
+    font-size: .78rem;
+    color: #9aa3bd;
+  }
+</style>
+</head>
+<body>
+
+<header class="hero">
+  <div class="hero-inner">
+    <img class="portrait" src="photo.jpg" alt="Portrait of Jingjing Li">
+    <div class="hero-text">
+      <h1>Jingjing Li (&#26446;&#38745;&#38745;)</h1>
+      <p class="tagline">Designing AI, measuring its impact</p>
+      <p class="titles">
+        <strong>Associate Professor of IT and Innovation</strong><br>
+        Shannon Center Mid-Career Fellow<br>
+        McIntire School of Commerce, University of Virginia
+      </p>
+    </div>
+  </div>
+</header>
+<div class="accent-bar"></div>
+
+<nav class="tabs" role="tablist">
+  <button data-tab="about" class="active">About</button>
+  <button data-tab="research">Research</button>
+  <button data-tab="teaching">Teaching</button>
+  <button data-tab="awards">Awards</button>
+  <button data-tab="service">Service</button>
+  <button data-tab="connect">Connect</button>
+</nav>
+
+<main>
+
+<!-- =================== ABOUT =================== -->
+<section id="about" class="panel active">
+  <h2>About Me</h2>
+
+  <div class="card">
+    <p>My research focuses on the design, development, and management of artificial
+    intelligence and data analytics systems, with applications in healthcare, marketing,
+    platforms, and public policy. Before joining academia, I was a scientist at Microsoft,
+    where I built large-scale machine learning and AI solutions for core products and
+    services.</p>
+
+    <p><strong>Work appears in:</strong> MIS Quarterly, Information Systems Research, Journal of
+    Marketing, Strategic Management Journal, Journal of Management Information Systems,
+    npj Digital Medicine, Review of Economics and Statistics, ACM Transactions on
+    Information Systems, Harvard Business Review</p>
+  </div>
+
+  <div class="card">
+    <h4>Editorial &amp; Community</h4>
+    <p>Associate Editor, Information Systems Research<br>
+    Former Associate Editor, MIS Quarterly<br>
+    Vice President, INFORMS Information Systems Society</p>
+
+    <h4>Program Leadership</h4>
+    <p>Academic Co-Director, M.S. in Business Analytics<br>
+    Associate Director, Center for Business Analytics</p>
+  </div>
+
+  <div class="card">
+    <p><strong>Awards &amp; Funding.</strong> I have received the INFORMS Design Science Award and
+    Best Paper awards from CIST, WITS, and the INFORMS Data Science Workshop, and my
+    research was a finalist for the Journal of Marketing's Shelby D. Hunt/Harold H.
+    Maynard Award in 2020. In 2026 I was named a Shannon Center Mid-Career Fellow at the
+    University of Virginia, following a three-year term as Andersen Alumni Associate
+    Professor (2023&ndash;2026). My research has been funded by the National Science Foundation,
+    Amazon, Google, Microsoft, the 4-VA initiative, the Jefferson Trust, UVA's Thriving
+    Youth in a Digital Environment (TYDE) Grand Challenge, the UVA LaCross AI Institute,
+    and the UVA Data Analytics Center.</p>
+
+    <p><strong>Service &amp; Teaching.</strong> I am an Associate Editor for Information Systems
+    Research. I was an Associate Editor for MIS Quarterly 2022&ndash;2025 (receiving MISQ's
+    Outstanding Associate Editor Award in 2024) and served on the Journal of the
+    Association for Information Systems Editorial Review Board 2024&ndash;2025. I serve as Vice
+    President of the INFORMS Information Systems Society, and have co-chaired flagship
+    events including WITS 2024 (Outstanding Service Award), the INFORMS Data Science
+    Workshop 2023, and the INFORMS ISS Doctoral Consortium 2025. I teach AI and analytics
+    across undergraduate, graduate, and executive programs, and was named a
+    Poets&amp;Quants Best Undergraduate Professor in 2023, received the Annual Faculty
+    Recognition Award from The Order of Claw and Dagger at UVA in 2024, and previously the
+    Teaching Excellence Award at the University of Colorado Boulder in 2012.</p>
+
+    <p><strong>Beyond the office.</strong> Away from work, I'm a pianist &mdash; Level 10 certificate,
+    the highest level for amateur players in China &mdash; and an avid hiker.</p>
+  </div>
+</section>
+
+<!-- =================== RESEARCH =================== -->
+<section id="research" class="panel">
+  <h2>Selected Publications</h2>
+
+  <ul class="pubs">
+    <li class="awarded">
+      <span class="pub-title">"When Influencers Delegate Replies: How Social AI Agents Shape User Engagement,"</span>
+      forthcoming, <span class="venue">Information Systems Research</span> (Maggie Zhang, Yang Gao, Jingjing Li,
+      Steven Johnson)
+      <span class="award-note">Finalist, Best Presentation Competition Award, Ohio State University AI Conference</span>
+    </li>
+    <li>
+      <span class="pub-title">"WiseMind: A Knowledge-Guided Multi-Agent Framework for Accurate and Empathetic
+      Psychiatric Diagnosis,"</span> <span class="venue">npj Digital Medicine</span>, 2026 (Yuqi Wu, Guangya Wan,
+      Jingjing Li, et al.; corresponding author)
+    </li>
+    <li>
+      <span class="pub-title">"Inventing with Machines: Generative AI and the Evolving Landscape of IS
+      Research,"</span> <span class="venue">Information Systems Research</span>, 2025, 36(4), 1949&ndash;1967 (Ram D. Gopal,
+      Jingjing Li, Kai Riemer, Suprateek Sarker, Param Vir Singh, Anjana Susarla, Martin
+      Bichler, Jason Bennett Thatcher)
+    </li>
+    <li>
+      <span class="pub-title">"Automating in High-Expertise, Low-Label Environments: Evidence-Based Medicine by
+      Expert-Augmented Few-Shot Learning,"</span> <span class="venue">MIS Quarterly</span>, 2025, 49(3), 1049&ndash;1094
+      (Rong Liu, Jingjing Li, Mark Zivkovic, Ahmed Abbasi; first two authors co-first)
+    </li>
+    <li class="awarded">
+      <span class="pub-title">"Individualism during Crises,"</span> <span class="venue">Review of Economics and Statistics</span>, 2022,
+      104(2), 368&ndash;385 (Bo Bian, Jingjing Li, Ting Xu, Natasha Foutz; first three authors
+      contribute equally)
+      <span class="award-note">INFORMS CIST Best Paper Award 2020; presented to the Biden Administration COVID-19 Response Team at HHS</span>
+    </li>
+    <li>
+      <span class="pub-title">"Platform Governance Matters: How Platform Gatekeeping Affects Knowledge Sharing
+      among Complementors,"</span> <span class="venue">Strategic Management Journal</span>, 2022, 43(3), 599&ndash;626
+      (Yuchen Zhang, Jingjing Li, Tony Tong)
+    </li>
+    <li class="awarded">
+      <span class="pub-title">"Path to Purpose? How Online Customer Journeys Differ for Hedonic versus
+      Utilitarian Purchases,"</span> <span class="venue">Journal of Marketing</span>, 2020, 84(4), 127&ndash;146 (Jingjing
+      Li, Ahmed Abbasi, Amar Cheema, Linda Abraham)
+      <span class="award-note">Shelby D. Hunt/Harold H. Maynard Award Finalist</span>
+    </li>
+    <li class="awarded">
+      <span class="pub-title">"TheoryOn: A Design Framework and System for Unlocking Behavioral Knowledge
+      through Ontology Learning,"</span> <span class="venue">MIS Quarterly</span>, 2020, 44(4), 1733&ndash;1772 (Jingjing Li,
+      Kai Larsen, Ahmed Abbasi)
+      <span class="award-note">INFORMS ISS Design Science Award 2019; WITS Best Prototype Award 2016; AWS Research Grant 2015 ($5,000)</span>
+    </li>
+    <li class="awarded">
+      <span class="pub-title">"A Deep Learning Architecture for Psychometric Natural Language Processing,"</span>
+      <span class="venue">ACM Transactions on Information Systems</span>, 2020, 38(1), 1&ndash;29 (Faizan Ahmad,
+      Ahmed Abbasi, Jingjing Li, et al.)
+      <span class="award-note">National Science Foundation Award, $500,000 (UVA share $230,000), 2018&ndash;2021; INFORMS Data Science Workshop Best Paper Nominee 2018; Microsoft Azure Award 2017 ($25,000)</span>
+    </li>
+    <li class="awarded">
+      <span class="pub-title">"Don't Mention It? Analyzing User-Generated Content Signals for Early Adverse
+      Event Warnings,"</span> <span class="venue">Information Systems Research</span>, 2019, 30(3), 1007&ndash;1028 (Ahmed
+      Abbasi, Jingjing Li, Donald Adjeroh, Marie Abate, Wanhong Zheng)
+      <span class="award-note">WITS Best Paper Award 2015; NSF Award 2018</span>
+    </li>
+    <li>
+      <span class="pub-title">"Advanced Customer Analytics: Strategic Value through Integration of
+      Relationship-Oriented Big Data,"</span> <span class="venue">Journal of Management Information Systems</span>,
+      2018, 35(2), 540&ndash;574 (Brent Kitchens, David Dobolyi, Jingjing Li, Ahmed Abbasi)
+    </li>
+    <li>
+      <span class="pub-title">"Make 'Fairness by Design' Part of Machine Learning,"</span> <span class="venue">Harvard Business
+      Review</span>, 2018 (Ahmed Abbasi, Jingjing Li, Gari Clifford, Herman Taylor)
+    </li>
+  </ul>
+
+  <h2 style="margin-top:2.4rem;">Grants</h2>
+
+  <div class="card">
+    <h3>Federal &amp; Commonwealth of Virginia</h3>
+    <ul>
+      <li>4-VA Collaborative Research Grant (UVA PI; with Yuan Zeng and Yongfa You, Virginia
+      Tech), "Advancing Tar Spot Detection and Monitoring in Virginia Corn Using Field
+      Observations, Remote Sensing, and Artificial Intelligence," $30,000 + $5,000 UVA
+      matching fund, 2026</li>
+      <li>4-VA Collaborative Research Grant (PI), "Building Machine Learning Resilience
+      during Disasters," $10,000, 2024&ndash;2025</li>
+      <li>National Science Foundation (Co-PI), $500,000 (UVA share $230,000), 2018&ndash;2021</li>
+    </ul>
+
+    <h3>University of Virginia</h3>
+    <ul>
+      <li>Thriving Youth in a Digital Environment (TYDE) Small Seed Grant (Co-PI, with
+      Hongru Du and Steven Johnson), "Building Youth Information Diets from Large-Scale
+      Clickstream Data: A Foundation for Understanding Digital Exposure and Mental Health,"
+      $30,000, 2026&ndash;2027</li>
+      <li>Thriving Youth in a Digital Environment (TYDE) Seed Grant (Co-PI, with Steven
+      Johnson and Maggie Zhang), "Validated Classifier of Mental Health Information-Seeking,"
+      $30,000, 2026&ndash;2027</li>
+      <li>UVA Analytics Resources Award (PI), "Revolutionizing Physician Workflows and
+      Well-being with Generative AI: Field Study on the Adoption and Impacts of DAX Copilot
+      at UVA Health," $10,000, 2025&ndash;2026</li>
+      <li>Fellowships in AI Research (FAIR) (PI), "LLM-Enabled Abuse in Digital
+      Advertising," LaCross AI Institute, $50,000, 2025&ndash;2026</li>
+      <li>Thriving Youth in a Digital Environment (TYDE) Postdoc Fellowship (PI), "Digital
+      Technology and Youth Mental Health," $200,000, 2025&ndash;2027</li>
+      <li>Jefferson Trust (Co-PI), "UVAi Vanguard: Transforming UVA's Academic Landscape
+      with AI &amp; Large Language Models," $112,800, 2024&ndash;2026</li>
+      <li>UVA Analytics Resources Award (PI), $8,000, 2023&ndash;2024</li>
+      <li>UVA CTE Thrive Grant (Co-PI), $10,000, 2023</li>
+    </ul>
+
+    <h3>Industry &amp; Research Community</h3>
+    <ul>
+      <li>WITS Feeder Workshop Grant (Co-PI), "CommuGraph: Deep Analytics on Multi-Agent
+      Chat Logs," $1,000, 2025</li>
+      <li>AWS Research Grant (PI), $6,000, 2021</li>
+      <li>Google Cloud Research Grant (PI), $5,000, 2021</li>
+      <li>Databricks Teaching Grant (PI), $10,000, 2021, 2022, 2023</li>
+      <li>Microsoft Azure Award (Co-PI), "Psychometric NLP for Patient Care and
+      Coordination," Microsoft Research, $25,000, 2017&ndash;2019</li>
+      <li>AWS Research Grant (PI), "Ontology Learning from Behavioral Research," Amazon,
+      $5,000, 2015</li>
+    </ul>
+  </div>
+</section>
+
+<!-- =================== TEACHING =================== -->
+<section id="teaching" class="panel">
+  <h2>Teaching</h2>
+
+  <div class="card">
+    <h3>Program Leadership</h3>
+    <ul>
+      <li>Academic Co-Director, Master of Science in Business Analytics (McIntire School of
+      Commerce &amp; Darden School of Business, 2024&ndash;present)</li>
+      <li>Mod 4 Director, Master of Science in Business Analytics (2021&ndash;present)</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>University of Virginia &mdash; McIntire School of Commerce</h3>
+    <ul>
+      <li><strong>COMM 4522 Foundations of Machine Learning and AI with Python</strong> (Undergraduate,
+      3-year avg. rating 4.8/5). How machine learning turns raw data into business
+      decisions: students build predictive and descriptive models in Python &mdash;
+      classification, clustering, association rules, and social media analytics &mdash; and
+      apply them to real business problems.</li>
+      <li><strong>COMM 4522 Foundations of Machine Learning and AI with Low-Code</strong>
+      (Undergraduate, 5-year avg. rating 4.6/5). The same machine-learning foundations
+      taught through low-code tools, so students from any concentration can design,
+      evaluate, and deploy AI models without heavy programming.</li>
+      <li><strong>COMM 4260 Business Analytics</strong> (Undergraduate, 5-year avg. rating 4.6/5).
+      The predecessor of COMM 4522: an introduction to data mining and analytics for
+      evaluating consumer information and enhancing marketing and financial intelligence.</li>
+      <li><strong>COMM 4261 Big Data</strong> (Undergraduate, 5-year avg. rating 4.7/5). A hands-on
+      tour of the modern data stack: how organizations store, process, and analyze data too
+      large for a single machine &mdash; from relational databases and NoSQL to Spark and cloud
+      platforms.</li>
+      <li><strong>GCOM 7280 Big Data</strong> (M.S. in Commerce Business Analytics, 5-year avg.
+      rating 4.6/5). Big data technologies and architectures for pre-experience master's
+      students, connecting data engineering choices to the analytics questions businesses
+      actually ask.</li>
+      <li><strong>MS MIT Big Data &amp; Artificial Intelligence</strong> (Executive M.S. in Management
+      of IT, avg. rating 4.8/5). Taught for 12 years in UVA's Executive M.S. in the
+      Management of Information Technology, a program for seasoned IT leaders averaging 14
+      years of professional experience. The course covers how big data platforms and AI
+      applications fit together &mdash; and how to evaluate, govern, and champion them inside an
+      organization.</li>
+      <li><strong>GBAC 7216 Managing Big Data</strong> (M.S. in Business Analytics, 5-year avg. rating
+      4.6/5). Taught in the UVA M.S. in Business Analytics, a part-time program delivered
+      jointly by McIntire and Darden for working professionals averaging 7&ndash;9 years of
+      experience. The course compares big data with traditional relational systems, then
+      explores Spark, NoSQL, cloud computing, and reference architectures for retrieving,
+      storing, integrating, and analyzing big data &mdash; ending with big-data-enabled AI
+      applications.</li>
+      <li><strong>GBAC 7219 Capstone II</strong> (M.S. in Business Analytics, co-taught with Rajkumar
+      Venkatesan). The program's culminating experience: student teams apply the full
+      analytics toolkit to a real client problem, presented during the MSBA global
+      immersion &mdash; most recently in Helsinki and Tallinn (June 2026), with visits to SAP
+      Finland, Wartsila, IQM Quantum Computers, Bolt, Milrem Robotics, the e-Estonia
+      Briefing Center, and the Finnish Institute of International Affairs.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>University of Colorado Boulder &mdash; Leeds School of Business</h3>
+    <ul>
+      <li><strong>Business Intelligence</strong> (Undergraduate, 2011&ndash;2012). An earlier undergraduate
+      course on business intelligence and decision support &mdash; recognized with the Leeds
+      Teaching Award in 2012 (awarded to one instructor per semester) after being named a
+      Teaching Award Finalist in 2011.</li>
+    </ul>
+  </div>
+</section>
+
+<!-- =================== AWARDS =================== -->
+<section id="awards" class="panel">
+  <h2>Awards</h2>
+
+  <div class="card">
+    <h3>Fellowships &amp; Chaired Appointments</h3>
+    <ul>
+      <li>Shannon Center Mid-Career Fellow, University of Virginia, 2026&ndash;2029</li>
+      <li>Andersen Alumni Associate Professorship (three-year chaired term), McIntire School
+      of Commerce, University of Virginia, 2023&ndash;2026</li>
+    </ul>
+
+    <h3>Research &amp; Best Paper Awards</h3>
+    <ul>
+      <li>Best Student Paper Nomination, OSU Fisher AI Conference, 2025 (postdoc advisee
+      Maggie Zhang; co-advised with Steven L. Johnson)</li>
+      <li>Best Student Paper Nomination, INFORMS Workshop on Data Science, 2025 (advised
+      student)</li>
+      <li>Best Paper Award Nominee, Workshop on Information Technologies and Systems (WITS),
+      2022</li>
+      <li>Best Paper Award, INFORMS Workshop on Data Science, 2021</li>
+      <li>Best Paper Award Nominee, INFORMS Conference on Information Systems and Technology
+      (CIST), 2021</li>
+      <li>Shelby D. Hunt/Harold H. Maynard Award Finalist, Journal of Marketing, 2020</li>
+      <li>Best Paper Award, INFORMS Conference on Information Systems and Technology (CIST),
+      2020</li>
+      <li>ISS Design Science Award, INFORMS, 2019</li>
+      <li>Best Paper Award Nominee, INFORMS Workshop on Data Science, 2018</li>
+      <li>Best Prototype Award, Workshop on Information Technologies and Systems (WITS), 2016</li>
+      <li>Best Paper Award, Workshop on Information Technologies and Systems (WITS), 2015</li>
+    </ul>
+
+    <h3>Editorial &amp; Service Awards</h3>
+    <ul>
+      <li>Outstanding Associate Editor, MIS Quarterly, 2024</li>
+      <li>Outstanding Service Award as Conference Co-Chair, Workshop on Information
+      Technologies and Systems (WITS), 2024</li>
+      <li>Outstanding Service as Industry and Prototype Chair, Workshop on Information
+      Technologies and Systems (WITS), 2018</li>
+    </ul>
+
+    <h3>Teaching Awards</h3>
+    <ul>
+      <li>Annual Faculty Recognition Award, The Order of Claw and Dagger, 2024</li>
+      <li>Poets&amp;Quants Best Undergraduate Professor, 2023</li>
+      <li>Teaching Award, Leeds School of Business, University of Colorado, 2012 (awarded to
+      one instructor per semester)</li>
+      <li>Teaching Award Finalist, Leeds School of Business, University of Colorado, 2011
+      (awarded to three instructors per semester)</li>
+    </ul>
+
+    <h3>Early Career &amp; Industry</h3>
+    <ul>
+      <li>Ship-it Award, Microsoft, 2014</li>
+      <li>The Colorado Linguistic Institute 2011 Fellowship, Linguistic Institute, 2011</li>
+      <li>Honorable Mention, The American Interdisciplinary Contest in Modeling (ICM), 2007</li>
+    </ul>
+  </div>
+</section>
+
+<!-- =================== SERVICE =================== -->
+<section id="service" class="panel">
+  <h2>Service</h2>
+
+  <div class="card">
+    <h3>Professional Service</h3>
+
+    <h4>Editorial Positions</h4>
+    <ul>
+      <li>Associate Editor: Information Systems Research (2026&ndash;present)</li>
+      <li>Associate Editor: MIS Quarterly (2022&ndash;2025) &mdash; Outstanding Associate Editor Award
+      (2024)</li>
+      <li>Editorial Review Board: Journal of the Association for Information Systems
+      (2024&ndash;2025)</li>
+      <li>Conference Associate Editor: ICIS (2018, 2020&ndash;2023), PACIS (2020), Academy of
+      Management (2025)</li>
+    </ul>
+
+    <h4>Society &amp; Board Leadership</h4>
+    <ul>
+      <li>Vice President: INFORMS Information Systems Society (2026&ndash;2027)</li>
+      <li>WITS Board Member &mdash; Industry Liaison (2025&ndash;2027)</li>
+      <li>AIS SIGTECH &mdash; Secretary/Treasurer (2025&ndash;2027)</li>
+      <li>INFORMS College on AI &mdash; Industry Liaison (2025&ndash;2027)</li>
+    </ul>
+
+    <h4>Conference Leadership</h4>
+    <ul>
+      <li>Conference Co-Chair: INFORMS ISS Doctoral Consortium (2025); WITS (2024) &mdash;
+      Outstanding Service Award; INFORMS Workshop on Data Science (2023)</li>
+      <li>Program Co-Chair: INFORMS Workshop on Data Science (2022)</li>
+      <li>Co-Chair: Mid-Career Faculty Consortium, AMCIS (2026)</li>
+      <li>Track Co-Chair: ICIS (2024&ndash;2025), PACIS (2021); Mini-Track Chair: AMCIS (2023)</li>
+      <li>Industry Talks Chair: WITS (2020); Industry &amp; Prototype Chair: WITS (2018) &mdash;
+      Outstanding Service</li>
+      <li>Program Committees: WITS (2016&ndash;present), INFORMS Workshop on Data Science
+      (2017&ndash;present), CIST (2020&ndash;present)</li>
+    </ul>
+
+    <h4>Mentoring &amp; Advisory</h4>
+    <ul>
+      <li>Doctoral Consortium Mentor: INFORMS ISS (2025), CHITA (2025), Academy of
+      Management (2024), AMCIS "Navigating the Job Market" panel (2020)</li>
+      <li>Junior Faculty Consortium Mentor: ICIS (2025)</li>
+      <li>Research Advisor: CityU IS Research Workshop (2023&ndash;2024)</li>
+      <li>AI Governance Workshop, American University (2023)</li>
+    </ul>
+
+    <h4>Reviewing</h4>
+    <ul>
+      <li>Regular reviewer for 11 journals and 8 conferences, and session chair at ICIS,
+      WITS, and INFORMS meetings.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h3>University Service</h3>
+
+    <h4>Program &amp; Center Leadership</h4>
+    <ul>
+      <li>Academic Co-Director, M.S. in Business Analytics, McIntire School of Commerce
+      (2024&ndash;present)</li>
+      <li>Associate Director, Center for Business Analytics (2020&ndash;present)</li>
+      <li>Mod 4 Coordinator, M.S. in Business Analytics (2022&ndash;present)</li>
+    </ul>
+
+    <h4>University of Virginia</h4>
+    <ul>
+      <li>UVA Provost's AI Task Force (2023&ndash;2024)</li>
+      <li>Thriving Youth in a Digital Environment (TYDE) Postdoc Committee Member
+      (2024&ndash;present)</li>
+      <li>AI Guides at UVA (2024&ndash;2025)</li>
+      <li>Faculty Pilot User: Cogniti Proof-of-Concept Launch &mdash; AI Agent for Teaching (2025)</li>
+      <li>UVA Interdisciplinary Research Focus Group (2024)</li>
+    </ul>
+
+    <h4>McIntire School of Commerce</h4>
+    <ul>
+      <li>Research Computing Coordinator (2021&ndash;present)</li>
+      <li>Graduate Program Committee (2023&ndash;present)</li>
+      <li>ARPT Subcommittee (2023&ndash;2026)</li>
+      <li>Undergraduate Program Committee (2021&ndash;2023)</li>
+    </ul>
+  </div>
+</section>
+
+<!-- =================== CONNECT =================== -->
+<section id="connect" class="panel">
+  <h2>Connect</h2>
+
+  <div class="card">
+    <p>I design AI and measure its impact &mdash; and that work is best done together: with
+    organizations facing real analytics and AI questions, and with scholars across
+    disciplines. Whether you're an industry partner, a fellow researcher, a student, or a
+    journalist, a short note on who you are and what you have in mind is plenty &mdash; I read
+    everything, and email is the fastest way to reach me.</p>
+
+    <h3>Ways to work together</h3>
+    <ul>
+      <li><strong>Industry partnerships.</strong> Bring a real analytics or AI problem to a UVA MSBA
+      capstone &mdash; student teams of experienced professionals work on your question under
+      faculty guidance &mdash; engage with McIntire's Center for Business Analytics on applied
+      AI and analytics, or partner on research: field studies, data partnerships, and
+      evaluations of AI deployments in your organization.</li>
+      <li><strong>Research collaboration.</strong> I work with scholars across information systems,
+      marketing, healthcare, and public policy on human-centered AI, large language models,
+      and data analytics &mdash; and with practitioners on field studies and data partnerships.</li>
+      <li><strong>Talks &amp; media.</strong> Invited talks, panels, executive education, and media
+      commentary on AI in business, healthcare AI, and analytics education.</li>
+    </ul>
+
+    <p>
+    <strong>Email:</strong> <a href="mailto:jingjing.li@virginia.edu">jingjing.li@virginia.edu</a><br>
+    <strong>Office:</strong> Rouss &amp; Robertson Halls 396, 125 Ruppel Dr, Charlottesville, VA 22903<br>
+    <strong>Links:</strong>
+    <a href="https://www.commerce.virginia.edu/faculty/jl9rf">UVA Faculty Page</a> &middot;
+    <a href="https://scholar.google.com/citations?user=JtKxK6wAAAAJ&amp;hl=en">Google Scholar</a> &middot;
+    <a href="https://www.linkedin.com/in/jingjingli1">LinkedIn</a> &middot;
+    <a href="https://orcid.org/0000-0003-1967-0090">ORCID</a>
+    </p>
+  </div>
+</section>
+
+</main>
+
+<!-- =================== FOOTER =================== -->
+<footer class="site-footer">
+  <p>&copy; 2026 Jingjing Li. All rights reserved.</p>
+  <p class="colophon">Last updated: July 2026. Best viewed with Netscape Navigator 4.0 at 800x600.</p>
+</footer>
+
+<script>
+  const tabs = document.querySelectorAll('nav.tabs button');
+  const panels = document.querySelectorAll('section.panel');
+
+  function activate(id, updateHash = true) {
+    const target = document.getElementById(id) ? id : 'about';
+    tabs.forEach(b => b.classList.toggle('active', b.dataset.tab === target));
+    panels.forEach(p => p.classList.toggle('active', p.id === target));
+    if (updateHash) history.replaceState(null, '', '#' + target);
+    window.scrollTo({ top: 0 });
+  }
+
+  tabs.forEach(b => b.addEventListener('click', () => activate(b.dataset.tab)));
+
+  const initial = location.hash.replace('#', '');
+  if (initial === 'contact') {
+    activate('connect', false);
+  } else if (initial) {
+    activate(initial, false);
+  }
+</script>
+
+</body>
+</html>
